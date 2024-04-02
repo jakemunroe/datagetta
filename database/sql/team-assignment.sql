@@ -1,3 +1,4 @@
+-- Assigns the correct conference to each team in the database
 -- Atlantic Coast Conference
 update "teams" set "DisplayName" = 'Louisville', "Conference" = 'Atlantic Coast Conference' where "TeamName" = 'LOU_CAR';
 update "teams" set "DisplayName" = 'Notre Dame', "Conference" = 'Atlantic Coast Conference' where "TeamName" = 'NOT_IRI';

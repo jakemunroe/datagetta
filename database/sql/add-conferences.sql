@@ -1,3 +1,4 @@
+-- Inserts into the conferences table the conferences that are in the NCAA Division I.
 INSERT INTO conferences
 VALUES
 ('Southeastern Conference'),

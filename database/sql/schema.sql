@@ -1,3 +1,4 @@
+-- Creates the schema for the database
 CREATE TABLE "players" (
   "PlayerName" varchar,
   "TeamName" varchar,

@@ -1,3 +1,4 @@
+-- Drops all tables in the public schema
 DROP TABLE IF EXISTS public.conferences CASCADE;
 
 DROP TABLE IF EXISTS public.pitch_sums CASCADE;

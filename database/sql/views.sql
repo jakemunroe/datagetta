@@ -1,3 +1,4 @@
+-- Creates the views for the database
 drop view if exists pitch_sums_view_2024;
 create or replace view pitch_sums_view_2024 as
 select "Pitcher" , "PitcherTeam",
