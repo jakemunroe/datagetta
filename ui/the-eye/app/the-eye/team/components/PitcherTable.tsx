@@ -3,7 +3,8 @@
 import Link from '@/app/utils/Link'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Theme } from '@/app/utils/theme';
-import { pitcher_stats_forTable } from '../../utils/types';
+import { pitcher_stats_forTable } from '../../../utils/types';
+import Box from '@mui/material/Box';
 
 const playerURL : string = '/the-eye/player/';
 
@@ -93,18 +94,19 @@ const columns: GridColDef[] = [
     },
 ];
 
-export default function BatterTable({players}: {players: pitcher_stats_forTable[]}) {
+export default function PitcherTable({players}: {players: pitcher_stats_forTable[]}) {
     return (
-        <DataGrid
-            rows = {players}
-            getRowId = {(row) => row.Pitcher}
-            columns = {columns}
-            autoHeight = {true}
-            hideFooter = {true}
-            sx={{
-                '& .MuiDataGrid-columnHeaders': {backgroundColor: Theme.palette.secondary.main},
-                '& .MuiDataGrid-columnHeaderTitle': {fontWeight: 700},
-            }}
-        />
+        <Box sx={{ height: 350 }}>
+            <DataGrid
+                rows = {players}
+                getRowId = {(row) => row.Pitcher}
+                columns = {columns}
+                hideFooter = {true}
+                sx={{
+                    '& .MuiDataGrid-columnHeaders': {backgroundColor: Theme.palette.secondary.main},
+                    '& .MuiDataGrid-columnHeaderTitle': {fontWeight: 700},
+                }}
+            />
+        </Box>
     );
 }

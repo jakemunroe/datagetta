@@ -1,3 +1,5 @@
+// Not used
+
 "use client";
 
 import * as React from "react";
@@ -17,6 +19,7 @@ const chartSetting = {
   width: 350,
   height: 350,
 };
+
 const dataset = [
   {
     Auburn: 63.9,
@@ -52,9 +55,7 @@ const dataset = [
   },
 ];
 
-
-
-const valueFormatter = (value: number) => `${value} percent`;
+const valueFormatter = (value: number | null) => `${value} percent`;
 
 export default function HorizontalBars() {
   return (

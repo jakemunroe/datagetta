@@ -1,19 +1,13 @@
-import { prisma } from '@/app/utils/db';
-import RosterTable from '../../components/RosterTable';
+import CreateRosterTable from '../../components/CreateRosterTable';
+import { Suspense } from 'react';
+import TableSkeleton from '../../components/TableSkeleton';
 
 export default async function Page({ params }: { params: { teamName: string } }) {    
     const decodedTeamName = decodeURIComponent(params.teamName);
-    
-    const players = await prisma.players.findMany({
-        where: {
-            TeamName: decodedTeamName,
-        },
-        orderBy: {
-            PlayerName: 'asc',
-        },
-    });
 
     return (
-        <RosterTable players = {players}/>
+        <Suspense fallback={<TableSkeleton />}>
+            <CreateRosterTable team = {decodedTeamName}/>
+        </Suspense>
     );
 }

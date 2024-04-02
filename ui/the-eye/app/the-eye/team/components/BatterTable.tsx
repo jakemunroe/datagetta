@@ -3,7 +3,8 @@
 import Link from '@/app/utils/Link'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Theme } from '@/app/utils/theme';
-import { batter_stats_forTable } from '../../utils/types';
+import { batter_stats_forTable } from '../../../utils/types';
+import Box from '@mui/material/Box';
 
 const playerURL : string = '/the-eye/player/';
 
@@ -26,15 +27,33 @@ const columns: GridColDef[] = [
         }
     },
     {
-        field: 'hits',
-        headerName: 'H',
-        description: 'Hits',
+        field: 'games',
+        headerName: 'Games',
+        description: 'Games',
+        width: 80,
+    },
+    {
+        field: 'plate_appearances',
+        headerName: 'PA',
+        description: 'Plate Appearances',
         width: 80,
     },
     {
         field: 'at_bats',
         headerName: 'AB',
         description: 'At Bats',
+        width: 80,
+    },
+    {
+        field: 'batting_average',
+        headerName: 'AVG',
+        description: 'Batting Average',
+        width: 80,
+    },
+    {
+        field: 'hits',
+        headerName: 'H',
+        description: 'Hits',
         width: 80,
     },
     {
@@ -68,21 +87,15 @@ const columns: GridColDef[] = [
         width: 80,
     },
     {
-        field: 'plate_appearances',
-        headerName: 'PA',
-        description: 'Plate Appearances',
+        field: 'sacrifice',
+        headerName: 'S',
+        description: 'Sacrifice',
         width: 80,
     },
     {
         field: 'hit_by_pitch',
         headerName: 'HBP',
         description: 'Hit by Pitch',
-        width: 80,
-    },
-    {
-        field: 'sacrifice',
-        headerName: 'S',
-        description: 'Sacrifice',
         width: 80,
     },
     {
@@ -101,18 +114,6 @@ const columns: GridColDef[] = [
         field: 'slugging_percentage',
         headerName: 'SLUG',
         description: 'Slugging Percentage',
-        width: 80,
-    },
-    {
-        field: 'games',
-        headerName: 'Games',
-        description: 'Games',
-        width: 80,
-    },
-    {
-        field: 'batting_average',
-        headerName: 'AVG',
-        description: 'Batting Average',
         width: 80,
     },
     {
@@ -143,16 +144,17 @@ const columns: GridColDef[] = [
 
 export default function BatterTable({players}: {players: batter_stats_forTable[]}) {
     return (
-        <DataGrid
-            rows = {players}
-            getRowId = {(row) => row.Batter}
-            columns = {columns}
-            autoHeight = {true}
-            hideFooter = {true}
-            sx={{
-                '& .MuiDataGrid-columnHeaders': {backgroundColor: Theme.palette.secondary.main},
-                '& .MuiDataGrid-columnHeaderTitle': {fontWeight: 700},
-            }}
-        />
+        <Box sx={{ height: 350 }}>
+            <DataGrid
+                rows = {players}
+                getRowId = {(row) => row.Batter}
+                columns = {columns}
+                hideFooter = {true}
+                sx={{
+                    '& .MuiDataGrid-columnHeaders': {backgroundColor: Theme.palette.secondary.main},
+                    '& .MuiDataGrid-columnHeaderTitle': {fontWeight: 700},
+                }}
+            />
+        </Box>
     );
 }

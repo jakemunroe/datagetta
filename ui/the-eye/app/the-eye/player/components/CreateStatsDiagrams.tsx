@@ -1,11 +1,10 @@
 import { prisma } from '@/app/utils/db';
 import { batter_stats } from "@/app/utils/types";
-import BatterTable from '../../components/BatterTable';
 import { batter_replacer } from '@/app/utils/replacer';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import BattingStatsBarChart from './BattingStatsBarChart';
 
-export default async function CreateStatsTables(
+export default async function CreateStatsDiagrams(
     {player, team, startDate, endDate}: {player: string, team: string, startDate: string, endDate: string})
 {    
     // https://www.prisma.io/docs/orm/more/upgrade-guides/upgrading-versions/upgrading-to-prisma-4#raw-query-mapping-postgresql-type-casts
@@ -15,8 +14,7 @@ export default async function CreateStatsTables(
     
     return (
         <Box>
-            <Typography variant='h6' fontWeight={600}>Batting</Typography>
-            <BatterTable players = {JSON.parse(JSON.stringify(batters, batter_replacer))}/>
+            <BattingStatsBarChart player = {JSON.parse(JSON.stringify(batters, batter_replacer))}/>
         </Box>
     );
 }

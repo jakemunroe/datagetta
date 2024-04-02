@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import { Suspense } from 'react';
 import DateSelector from "@/app/the-eye/player/components/DateSelector";
-import CreateStatsTables from "@/app/the-eye/player/components/CreateStatsTables";
+import CreateStatsDiagrams from "@/app/the-eye/player/components/CreateStatsDiagrams";
 import StatsTableSkeleton from "@/app/the-eye/player/components/StatsTableSkeleton";
 
 export default function Page (
@@ -19,7 +19,7 @@ export default function Page (
 
             <Box sx={{paddingTop: 2}}>
                 <Suspense fallback={<StatsTableSkeleton />}>
-                    <CreateStatsTables
+                    <CreateStatsDiagrams
                         player = {params.playerName}
                         team = {decodedTeamName}
                         startDate = {params.startDate}
