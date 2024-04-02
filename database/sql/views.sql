@@ -1,14 +1,15 @@
-drop view if exists pitch_sums_view;
-create or replace view pitch_sums_view as
+drop view if exists pitch_sums_view_2024;
+create or replace view pitch_sums_view_2024 as
 select "Pitcher" , "PitcherTeam",
          COUNT(*) as total_pitches,
-         COUNT(*) filter (where "AutoPitchType" = 'Curveball') as curveball_count,
-         COUNT(*) filter (where "AutoPitchType" = 'Four-Seam') as fourseam_count,
-            COUNT(*) filter (where "AutoPitchType" = 'Sinker') as sinker_count,
-            COUNT(*) filter (where "AutoPitchType" = 'Slider') as slider_count,
-            COUNT(*) filter (where "TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam') as twoseam_count,
-            COUNT(*) filter (where "AutoPitchType" = 'Changeup') as changeup_count
-from trackman_pitcher
+         COUNT(*) filter (where tp."AutoPitchType" = 'Curveball') as curveball_count,
+         COUNT(*) filter (where tp."AutoPitchType" = 'Four-Seam') as fourseam_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Sinker') as sinker_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Slider') as slider_count,
+            COUNT(*) filter (where tp."TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam') as twoseam_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Changeup') as changeup_count
+from trackman_pitcher tp, trackman_metadata tm, seasons s
+where tm."PitchUID" = trackman_pitcher."PitchUID" and s."SeasonTitle" = '2024' and tm."UTCDate" >= s."StartDate" and tm."UTCDate" <= s."EndDate"
 group by ("Pitcher", "PitcherTeam");
 
 -- Values AU Baseball uses for strike zone
@@ -152,8 +153,8 @@ from at_bats_subquery;
 -- max_plate_height = 3.55
 -- min_plate_height = 1.77
 
-drop view if exists pitcher_stats_view;
-create or replace view pitcher_stats_view as
+drop view if exists pitcher_stats_view_2024;
+create or replace view pitcher_stats_view_2024 as
 with pitcher_stats_subquery as (
     select "Pitcher", "PitcherTeam",
         COUNT(*) filter (where "KorBB" = 'Strikeout') as total_strikeouts_pitcher,
@@ -197,8 +198,8 @@ with pitcher_stats_subquery as (
         ((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
         SUM("OutsOnPlay"::integer)) % 3) / 10 as total_innings_pitched,
         COUNT(distinct ("PAofInning", "Inning", "Batter", "GameUID")) as total_batters_faced
-    from trackman_metadata tm, trackman_pitcher tp, trackman_batter tb
-    where tm."PitchUID" = tp."PitchUID" and tm."PitchUID" = tb."PitchUID"
+    from trackman_metadata tm, trackman_pitcher tp, trackman_batter tb, seasons s
+    where tm."PitchUID" = tp."PitchUID" and tm."PitchUID" = tb."PitchUID" and s."SeasonTitle" = '2024' and tm."UTCDate" >= s."StartDate" and tm."UTCDate" <= s."EndDate"
     group by ("Pitcher", "PitcherTeam")
 )
 select 
