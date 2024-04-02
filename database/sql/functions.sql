@@ -157,7 +157,7 @@ $$ language plpgsql;
 
 drop function if exists get_pitcher_stats;
 create or replace function get_pitcher_stats(pitcher_name text, pitcher_team text, start_date date, end_date date)
-returns table("Pitcher" varchar, "PitcherTeam" varchar, "hits" bigint, "at_bats" bigint, "strikes" bigint, "walks" bigint, "strikeouts" bigint, "homeruns" bigint, "extra_base_hits" bigint, "plate_appearances" bigint, "hit_by_pitch" bigint, "sacrifice" bigint, "total_bases" bigint, "on_base_percentage" decimal, "slugging_percentage" decimal, "chase_percentage" decimal, "in_zone_whiff_percentage" decimal, "games" bigint, "batting_average" decimal, "onbase_plus_slugging" decimal, "isolated_power" decimal, "k_percentage" decimal, "base_on_ball_percentage" decimal)
+returns table("Pitcher" varchar, "PitcherTeam" varchar, "total_strikeouts_pitcher" bigint, "total_walks_pitcher" bigint, "total_out_of_zone_pitches" bigint, "misses_in_zone" bigint, "swings_in_zone" bigint, "total_num_chases" bigint, "pitches" bigint, "games" bigint, "games_started" bigint, "total_innings_pitched" decimal, "total_batters_faced" bigint)
 as $$
     begin
     return query
