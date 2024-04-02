@@ -9,7 +9,7 @@ select "Pitcher" , "PitcherTeam",
             COUNT(*) filter (where tp."TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam') as twoseam_count,
             COUNT(*) filter (where tp."AutoPitchType" = 'Changeup') as changeup_count
 from trackman_pitcher tp, trackman_metadata tm, seasons s
-where tm."PitchUID" = trackman_pitcher."PitchUID" and s."SeasonTitle" = '2024' and tm."UTCDate" >= s."StartDate" and tm."UTCDate" <= s."EndDate"
+where tm."PitchUID" = tp."PitchUID" and s."SeasonTitle" = '2024' and tm."UTCDate" >= s."StartDate" and tm."UTCDate" <= s."EndDate"
 group by ("Pitcher", "PitcherTeam");
 
 -- Values AU Baseball uses for strike zone
