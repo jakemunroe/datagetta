@@ -206,7 +206,7 @@ as $$
         SUM("OutsOnPlay"::integer)) % 3) / 10 as total_innings_pitched,
         COUNT(distinct ("PAofInning", "Inning", "Batter", "GameUID")) as total_batters_faced
     from trackman_metadata tm, trackman_pitcher tp, trackman_batter tb, seasons s
-    where tm."PitchUID" = tp."PitchUID" and tm."PitchUID" = tb."PitchUID" and s."SeasonTitle" = '2024' and tm."UTCDate" >= s."StartDate" and tm."UTCDate" <= s."EndDate"
+    where tm."PitchUID" = tp."PitchUID" and tm."PitchUID" = tb."PitchUID" and s."SeasonTitle" = '2024' and tm."UTCDate" >= s."StartDate" and tm."UTCDate" <= s."EndDate" and tp."Pitcher" = pitcher_name and tp."PitcherTeam" = pitcher_team
     group by (tp."Pitcher", tp."PitcherTeam");
     end;
 $$ language plpgsql;
