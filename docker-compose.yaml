@@ -1,39 +1,41 @@
 services:
-   next:
-      image: node:21
-      container_name: next
-      env_file:
-        - next.env
-      volumes:
-        - ./ui/the-eye:/next-app
-      ports:
-        - "80:3000"
-      networks:
-         - datagetta_net
-      working_dir: /next-app
-      depends_on:
-        - postgres
-      entrypoint: ["/bin/sh","-c"]
-      command:
+  next:
+    image: node:21
+    container_name: next
+    env_file:
+      - next.env
+    volumes:
+      - ./ui/the-eye:/next-app
+    ports:
+      - "80:3000"
+    networks:
+      - datagetta_net
+    working_dir: /next-app
+    depends_on:
+      - postgres
+    entrypoint: ["/bin/sh", "-c"]
+    command:
       - |
-         npm ci
-         npx prisma db pull --force
-         npx prisma generate
-         npm run build
-         npm run start
-   postgres:
-      image: postgres:16
-      container_name: postgres
-      volumes:
-        - ./backups:/backups
-        - ./data:/var/lib/postgresql/data
-        - ./database/sql:/sql
-      env_file:
-        - db.env
-      networks:
-         - datagetta_net
-      ports:
-        - "5432:5432"
+        npm ci
+        npx prisma db pull --force
+        npx prisma generate
+        npx prisma migrate dev --name init
+        npx prisma migrate deploy
+        npm run build
+        npm run start
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    volumes:
+      - ./backups:/backups
+      - ./data:/var/lib/postgresql/data
+      - ./database/sql:/sql
+    env_file:
+      - db.env
+    networks:
+      - datagetta_net
+    ports:
+      - "5432:5432"
   #  caddy:
   #   image: caddy:latest
   #   container_name: caddy
@@ -45,5 +47,5 @@ services:
   #     - ./Caddyfile:/etc/caddy/Caddyfile
 
 networks:
-   datagetta_net:
-      driver: bridge
+  datagetta_net:
+    driver: bridge
