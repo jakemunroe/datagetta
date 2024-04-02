@@ -41,6 +41,7 @@ export async function GET(request: Request) {
     
     const trackman_batters = await prisma.trackman_batter.findMany({
         select: {
+            PitchUID: true,
             BatterSide: true,
             BatterID: true
         }
