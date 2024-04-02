@@ -161,7 +161,7 @@ returns table("Pitcher" varchar, "PitcherTeam" varchar, "hits" bigint, "at_bats"
 as $$
     begin
     return query
-    select "Pitcher", "PitcherTeam",
+    select tp."Pitcher", tp."PitcherTeam",
         COUNT(*) filter (where "KorBB" = 'Strikeout') as total_strikeouts_pitcher,
         COUNT(*) filter (where "KorBB" = 'Walk') as total_walks_pitcher,
         COUNT(*) filter (where "PlateLocHeight" > 3.55
@@ -205,7 +205,7 @@ as $$
         COUNT(distinct ("PAofInning", "Inning", "Batter", "GameUID")) as total_batters_faced
     from trackman_metadata tm, trackman_pitcher tp, trackman_batter tb, seasons s
     where tm."PitchUID" = tp."PitchUID" and tm."PitchUID" = tb."PitchUID" and s."SeasonTitle" = '2024' and tm."UTCDate" >= s."StartDate" and tm."UTCDate" <= s."EndDate"
-    group by ("Pitcher", "PitcherTeam");
+    group by (tp."Pitcher", tp."PitcherTeam");
     end;
 $$ language plpgsql;
 
