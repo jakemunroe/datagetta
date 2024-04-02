@@ -161,7 +161,9 @@ returns table("Pitcher" varchar, "PitcherTeam" varchar, "hits" bigint, "at_bats"
 as $$
     begin
     return query
-    select tp."Pitcher", tp."PitcherTeam",
+    select 
+        tp."Pitcher" as "Pitcher",
+        tp."PitcherTeam" as "PitcherTeam",
         COUNT(*) filter (where "KorBB" = 'Strikeout') as total_strikeouts_pitcher,
         COUNT(*) filter (where "KorBB" = 'Walk') as total_walks_pitcher,
         COUNT(*) filter (where "PlateLocHeight" > 3.55
