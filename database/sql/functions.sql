@@ -23,11 +23,135 @@ drop function if exists get_batter_stats;
 create or replace function get_batter_stats(batter_name text, batter_team text, start_date date, end_date date)
 returns table("Batter" varchar, "BatterTeam" varchar, "hits" bigint, "at_bats" bigint, "strikes" bigint, "walks" bigint, "strikeouts" bigint, "homeruns" bigint, "extra_base_hits" bigint, "plate_appearances" bigint, "hit_by_pitch" bigint, "sacrifice" bigint, "total_bases" bigint, "on_base_percentage" decimal, "slugging_percentage" decimal, "chase_percentage" decimal, "in_zone_whiff_percentage" decimal, "games" bigint, "batting_average" decimal, "onbase_plus_slugging" decimal, "isolated_power" decimal, "k_percentage" decimal, "base_on_ball_percentage" decimal)
 as $$
-begin
+begin 
     return query
-    select * 
-    from get_all_batter_stats(start_date, end_date) gbs
-    where gbs."Batter" = batter_name and gbs."BatterTeam" = batter_team;
+    with at_bats_subquery as (
+        with hits_subquery as (
+            select tb."Batter", tb."BatterTeam",
+                    COUNT(*) filter (where "PlayResult" = 'Single'
+                                    or "PlayResult" = 'Double'
+                                    or "PlayResult" = 'Triple'
+                                    or "PlayResult" = 'HomeRun'
+                    ) as hits,
+                    COUNT(*) filter (where "PlayResult" = 'Error'
+                                    or "PlayResult" = 'Out'
+                                    or "PlayResult" = 'FieldersChoice'
+                                    or "KorBB" = 'Strikeout'
+                                    or "PlayResult" = 'Single'
+                                    or "PlayResult" = 'Double'
+                                    or "PlayResult" = 'Triple'
+                                    or "PlayResult" = 'HomeRun'
+                                    ) as at_bats,
+                    COUNT(*) filter (where "PlateLocHeight" > 3.55
+                                    or "PlateLocHeight" < 1.77
+                                    or "PlateLocSide" > 0.86
+                                    or "PlateLocSide" < -0.86
+                                    ) as total_out_of_zone_pitches,
+                    COUNT(*) filter (where "PlateLocHeight" < 3.55
+                                    and "PlateLocHeight" > 1.77
+                                    and "PlateLocSide" < 0.86
+                                    and "PlateLocSide" > -0.86
+                                    ) as total_in_zone_pitches
+            from trackman_metadata tm, trackman_batter tb, trackman_pitcher tp
+            where tm."PitchUID" = tb."PitchUID" and tb."PitchUID" = tp."PitchUID" and tm."UTCDate" >= start_date and tm."UTCDate" <= end_date and tb."Batter" = batter_name and tb."BatterTeam" = batter_team
+            group by (tb."Batter", tb."BatterTeam")
+        )
+        select 
+            tb."Batter" as "Batter",
+            tb."BatterTeam" as "BatterTeam",
+            hs."hits" as "hits",
+            hs."at_bats" as "at_bats",
+            COUNT(*) filter (where "PitchCall" = 'StrikeCalled'
+                            or "PitchCall" = 'StrikeSwinging'
+                            or "PitchCall" = 'FoulBallNotFieldable'
+                            ) as strikes,
+            COUNT(*) filter (where "KorBB" = 'Walk') as walks,
+            COUNT(*) filter (where "KorBB" = 'Strikeout') as strikeouts,
+            COUNT(*) filter (where "PlayResult" = 'HomeRun') as homeruns,
+            COUNT(*) filter (where "PlayResult" = 'Double'
+                            or "PlayResult" = 'Triple'
+                            or "PlayResult" = 'HomeRun'
+                            ) as extra_base_hits,
+            COUNT(*) filter (where "KorBB" = 'Walk'
+                            or "PitchCall" = 'InPlay'
+                            or "PitchCall" = 'HitByPitch'
+                            or "KorBB" = 'Strikeout'
+                            ) as plate_appearances,
+            COUNT(*) filter (where "PitchCall" = 'HitByPitch') as hit_by_pitch,
+            COUNT(*) filter (where "PlayResult" = 'Sacrifice') as sacrifice,
+            SUM(case
+                when "PlayResult" = 'Single' then 1
+                when "PlayResult" = 'Double' then 2
+                when "PlayResult" = 'Triple' then 3
+                when "PlayResult" = 'HomeRun' then 4
+                else 0
+                end) as total_bases,
+            case when hs."at_bats" = 0 then null
+                else (hs."hits" + COUNT(*) filter (where "KorBB" = 'Walk'
+                                        or "PitchCall" = 'HitByPitch'))::decimal
+                / (COUNT(*) filter (where "PlayResult" = 'Error'
+                                    or "PlayResult" = 'Out'
+                                    or "PlayResult" = 'FieldersChoice'
+                                    or "KorBB" = 'Strikeout'
+                                    ) + hs."hits" 
+                                    + COUNT(*) filter (where "KorBB" = 'Walk'
+                                                        or "PitchCall" = 'HitByPitch')
+                                    + COUNT(*) filter (where "PlayResult" = 'Sacrifice' 
+                                                        and "TaggedHitType" = 'FlyBall')) 
+            end as on_base_percentage,
+            case when hs."at_bats" = 0 then null
+                else 
+                SUM(case
+                when "PlayResult" = 'Single' then 1
+                when "PlayResult" = 'Double' then 2
+                when "PlayResult" = 'Triple' then 3
+                when "PlayResult" = 'HomeRun' then 4
+                else 0
+                end)::decimal / hs."at_bats" 
+            end as slugging_percentage,
+            case when hs."total_out_of_zone_pitches" = 0 then null
+                else COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'
+                                    or "PitchCall" = 'FoulBallNotFieldable'
+                                    or "PitchCall" = 'InPlay'
+                                    or "PlateLocHeight" > 3.55
+                                    or "PlateLocHeight" < 1.77
+                                    or "PlateLocSide" > 0.86
+                                    or "PlateLocSide" < -0.86
+                                    )::decimal / hs."total_out_of_zone_pitches"
+            end as chase_percentage,
+            case when hs."total_in_zone_pitches" = 0 then null
+                else COUNT(*) filter (where "PitchCall" = 'StrikeSwinging'
+                                    and "PlateLocHeight" < 3.55
+                                    and "PlateLocHeight" > 1.77
+                                    and "PlateLocSide" < 0.86
+                                    and "PlateLocSide" > -0.86
+                                    )::decimal / hs."total_in_zone_pitches"
+            end as in_zone_whiff_percentage,
+            COUNT(distinct "GameUID") as games
+        from  hits_subquery hs, trackman_batter tb, trackman_metadata tm, trackman_pitcher tp
+        where hs."Batter" = tb."Batter" and hs."BatterTeam" = tb."BatterTeam" and tb."PitchUID" = tm."PitchUID" and tm."PitchUID" = tp."PitchUID" and tm."UTCDate" >= start_date and tm."UTCDate" <= end_date and tb."Batter" = batter_name and tb."BatterTeam" = batter_team
+        group by (tb."Batter", tb."BatterTeam", hs."hits", hs."at_bats", hs."total_out_of_zone_pitches", hs."total_in_zone_pitches")
+    )
+    select 
+            *,
+            case
+                when abs."at_bats" = 0 then null
+                else abs."hits"::decimal / abs."at_bats"
+            end as batting_average,
+            abs."on_base_percentage" + abs."slugging_percentage" as onbase_plus_slugging,
+            abs."slugging_percentage" - case
+                when abs."at_bats" = 0 then null
+                else abs."hits"::decimal / abs."at_bats"
+            end as isolated_power,
+            case
+                when abs."plate_appearances" = 0 then null
+                else abs."strikeouts"::decimal / abs."plate_appearances"
+            end as k_percentage,
+            case
+                when abs."plate_appearances" = 0 then null
+                else abs."walks"::decimal / abs."plate_appearances"
+            end as base_on_ball_percentage
+    from at_bats_subquery abs;
 end;
 $$ language plpgsql;
 
