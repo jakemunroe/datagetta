@@ -225,7 +225,7 @@ select "Pitcher", "PitcherTeam",
         AVG("SpinRate") filter (where "SpinRate" is not null) as avg_spin_rate,
         AVG("SpinAxis") filter (where "SpinAxis" is not null) as avg_spin_axis,
         AVG("VertApprAngle") filter (where "VertApprAngle" is not null) as avg_vert_appr_angle,
-        AVG("HorzApprAngle") filter (where "HorzApprAngle" is not null) as avg_horz_appr_angle,
+        AVG("HorzApprAngle") filter (where "HorzApprAngle" is not null) as avg_horz_appr_angle
 from trackman_pitcher
 where "AutoPitchType" != '' and "AutoPitchType" != 'Splitter'
 group by ("Pitcher", "PitcherTeam", "PitcherThrows", "PitchType");
