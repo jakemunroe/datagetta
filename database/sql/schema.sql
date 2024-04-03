@@ -1,21 +1,21 @@
 -- Creates the schema for the database
-CREATE TABLE "players" (
+CREATE TABLE IF NOT EXISTS "players" (
   "PlayerName" varchar,
   "TeamName" varchar,
   PRIMARY KEY ("PlayerName", "TeamName")
 );
 
-CREATE TABLE "teams" (
+CREATE TABLE IF NOT EXISTS "teams" (
   "TeamName" varchar UNIQUE PRIMARY KEY,
   "DisplayName" varchar,
   "Conference" varchar
 );
 
-CREATE TABLE "conferences" (
+CREATE TABLE IF NOT EXISTS "conferences" (
   "ConferenceName" varchar UNIQUE PRIMARY KEY
 );
 
-CREATE TABLE "trackman_metadata" (
+CREATE TABLE IF NOT EXISTS "trackman_metadata" (
   "PitchUID" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "GameDate" date,
   "PitchTime" time,
@@ -50,7 +50,7 @@ CREATE TABLE "trackman_metadata" (
   "PlayID" varchar
 );
 
-CREATE TABLE "trackman_pitcher" (
+CREATE TABLE IF NOT EXISTS "trackman_pitcher" (
   "PitchUID" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "PitchNo" int,
   "PAofInning" int,
@@ -109,7 +109,7 @@ CREATE TABLE "trackman_pitcher" (
   "PitchMovementConfidence" varchar
 );
 
-CREATE TABLE "trackman_catcher" (
+CREATE TABLE IF NOT EXISTS "trackman_catcher" (
   "PitchUID" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "Catcher" varchar,
   "CatcherID" int,
@@ -142,7 +142,7 @@ CREATE TABLE "trackman_catcher" (
   "CatcherThrowLocationConfidence" varchar
 );
 
-CREATE TABLE "trackman_batter" (
+CREATE TABLE IF NOT EXISTS "trackman_batter" (
   "PitchUID" uuid UNIQUE PRIMARY KEY DEFAULT (uuid_generate_v4()),
   "Batter" varchar,
   "BatterID" int,
@@ -197,11 +197,20 @@ CREATE TABLE "trackman_batter" (
   "HitLandingConfidence" varchar
 );
 
-CREATE TABLE "seasons" (
+CREATE TABLE IF NOT EXISTS "seasons" (
   "SeasonTitle" varchar UNIQUE PRIMARY KEY,
   "StartDate" date,
   "EndDate" date
 );
+
+-- Table for defensive shifting modeling team data
+CREATE TABLE IF NOT EXISTS "defensive_shift_model_values" (
+  "Pitcher" varchar,
+  "PitcherTeam" varchar,
+  "PitchType" varchar,
+  "ModelValues" decimal [],
+  PRIMARY KEY ("Pitcher", "PitcherTeam", "PitchType")
+)
 
 ALTER TABLE "trackman_batter" ADD CONSTRAINT "trackman_batter_PitchUID_fkey1" FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID") ON DELETE CASCADE;
 
@@ -222,3 +231,5 @@ ALTER TABLE "teams" ADD CONSTRAINT "teams_Conference_fkey1" FOREIGN KEY ("Confer
 ALTER TABLE "trackman_metadata" ADD CONSTRAINT "trackman_metadata_HomeTeam_fkey1" FOREIGN KEY ("HomeTeam") REFERENCES "teams" ("TeamName") ON DELETE CASCADE;
 
 ALTER TABLE "trackman_metadata" ADD CONSTRAINT "trackman_metadata_AwayTeam_fkey1" FOREIGN KEY ("AwayTeam") REFERENCES "teams" ("TeamName") ON DELETE CASCADE;
+
+ALTER TABLE "defensive_shift_model_values" ADD CONSTRAINT "defensive_shift_model_values_Pitcher_PitcherTeam_fkey1" FOREIGN KEY ("Pitcher", "PitcherTeam") REFERENCES "players" ("PlayerName", "TeamName") ON DELETE CASCADE;
