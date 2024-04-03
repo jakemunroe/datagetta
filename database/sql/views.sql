@@ -229,10 +229,22 @@ with pitcher_stats_subquery as (
     group by ("Pitcher", "PitcherTeam", "PitcherThrows", "TaggedPitchType", "AutoPitchType")
     )
 select
-    *,
+    "Pitcher",
+    "PitcherTeam",
+    "PitcherThrows",
     case
         when "TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam' then 'Two-Seam'
         else "AutoPitchType"
     end as "PitchType"
+    "avg_relspeed",
+    "avg_induced_vert_break",
+    "avg_horz_break",
+    "avg_rel_height",
+    "avg_rel_side",
+    "avg_extension",
+    "avg_spin_rate",
+    "avg_spin_axis",
+    "avg_vert_appr_angle",
+    "avg_horz_appr_angle"
 from pitcher_stats_subquery
 group by ("Pitcher", "PitcherTeam", "PitcherThrows", "PitchType");
