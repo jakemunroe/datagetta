@@ -213,7 +213,7 @@ create or replace view pitcher_pitch_type_avg_view as
 select "Pitcher", "PitcherTeam",
         "PitcherThrows",
         AVG("RelSpeed") as avg_relspeed,
-        AVG("InducedVertBreak") as avg_induced_vert_break,
+        AVG("InducedVert") as avg_induced_vert_break,
         AVG("HorzBreak") as avg_horz_break,
         AVG("RelHeight") as avg_rel_height,
         AVG("RelSide") as avg_rel_side,
