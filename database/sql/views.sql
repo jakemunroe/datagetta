@@ -235,7 +235,7 @@ select
     case
         when "TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam' then 'Two-Seam'
         else "AutoPitchType"
-    end as "PitchType"
+    end as "PitchType",
     "avg_relspeed",
     "avg_induced_vert_break",
     "avg_horz_break",
