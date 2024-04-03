@@ -226,7 +226,7 @@ with pitcher_stats_subquery as (
             AVG("VertApprAngle") as avg_vert_appr_angle,
             AVG("HorzApprAngle") as avg_horz_appr_angle
     from trackman_pitcher
-    group by ("Pitcher", "PitcherTeam", "PitcherThrows", "TaggedPitchType", "AutoPitchType");
+    group by ("Pitcher", "PitcherTeam", "PitcherThrows", "TaggedPitchType", "AutoPitchType")
     )
 select
     *,
