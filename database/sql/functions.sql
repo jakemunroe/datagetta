@@ -209,10 +209,10 @@ as $$
                         and "Strikes" = 0
                         and "PAofInning" = 1
                         ) as games_started,
-        ((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
+        (((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
         SUM("OutsOnPlay"::integer)) / 3)::decimal + 
         (((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
-        SUM("OutsOnPlay"::integer)) % 3) / 10)::decimal as total_innings_pitched,
+        SUM("OutsOnPlay"::integer)) % 3) / 10)::decimal)::decimal as total_innings_pitched,
         COUNT(distinct ("PAofInning", "Inning", "Batter", "GameUID")) as total_batters_faced
     from trackman_metadata tm, trackman_pitcher tp, trackman_batter tb
     where tm."PitchUID" = tp."PitchUID" and tm."PitchUID" = tb."PitchUID" and tm."UTCDate" >= start_date and tm."UTCDate" <= end_date and tp."Pitcher" = pitcher_name and tp."PitcherTeam" = pitcher_team
