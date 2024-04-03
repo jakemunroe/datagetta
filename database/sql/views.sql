@@ -213,7 +213,8 @@ create or replace view pitcher_pitch_type_avg_view as
 select "Pitcher", "PitcherTeam",
         "PitcherThrows",
         case
-            when "TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam' then 'Two-Seam'
+            when "TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam' then 'Sinker'
+            when "AutoPitchType" = 'Four-Seam' then 'Fastball'
             else "AutoPitchType"
         end as "PitchType",
         AVG("RelSpeed") filter (where "RelSpeed" != 'NaN') as avg_rel_speed,
@@ -227,6 +228,6 @@ select "Pitcher", "PitcherTeam",
         AVG("VertApprAngle") filter (where "VertApprAngle" != 'NaN') as avg_vert_appr_angle,
         AVG("HorzApprAngle") filter (where "HorzApprAngle" != 'NaN') as avg_horz_appr_angle
 from trackman_pitcher
-where "AutoPitchType" != '' and "AutoPitchType" != 'Splitter'
+where "AutoPitchType" != ''
 group by ("Pitcher", "PitcherTeam", "PitcherThrows", "PitchType");
     
