@@ -246,5 +246,4 @@ select
     "avg_spin_axis",
     "avg_vert_appr_angle",
     "avg_horz_appr_angle"
-from pitcher_stats_subquery
-group by ("Pitcher", "PitcherTeam", "PitcherThrows", "PitchType");
+from pitcher_stats_subquery;
