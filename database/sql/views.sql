@@ -210,40 +210,22 @@ from pitcher_stats_subquery;
 -- View for defensive shifting modeling team
 drop view if exists pitcher_pitch_type_avg_view;
 create or replace view pitcher_pitch_type_avg_view as
-with pitcher_stats_subquery as (
-    select "Pitcher", "PitcherTeam",
-            "PitcherThrows",
-            "TaggedPitchType",
-            "AutoPitchType",
-            AVG("RelSpeed") as avg_relspeed,
-            AVG("InducedVert") as avg_induced_vert_break,
-            AVG("HorzBreak") as avg_horz_break,
-            AVG("RelHeight") as avg_rel_height,
-            AVG("RelSide") as avg_rel_side,
-            AVG("Extension") as avg_extension,
-            AVG("SpinRate") as avg_spin_rate,
-            AVG("SpinAxis") as avg_spin_axis,
-            AVG("VertApprAngle") as avg_vert_appr_angle,
-            AVG("HorzApprAngle") as avg_horz_appr_angle
-    from trackman_pitcher
-    group by ("Pitcher", "PitcherTeam", "PitcherThrows", "TaggedPitchType", "AutoPitchType")
-    )
-select
-    "Pitcher",
-    "PitcherTeam",
-    "PitcherThrows",
-    case
-        when "TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam' then 'Two-Seam'
-        else "AutoPitchType"
-    end as "PitchType",
-    "avg_relspeed",
-    "avg_induced_vert_break",
-    "avg_horz_break",
-    "avg_rel_height",
-    "avg_rel_side",
-    "avg_extension",
-    "avg_spin_rate",
-    "avg_spin_axis",
-    "avg_vert_appr_angle",
-    "avg_horz_appr_angle"
-from pitcher_stats_subquery;
+select "Pitcher", "PitcherTeam",
+        "PitcherThrows",
+        case
+            when "TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam' then 'Two-Seam'
+            else "AutoPitchType"
+        end as "PitchType",
+        AVG("RelSpeed") as avg_relspeed,
+        AVG("InducedVert") as avg_induced_vert_break,
+        AVG("HorzBreak") as avg_horz_break,
+        AVG("RelHeight") as avg_rel_height,
+        AVG("RelSide") as avg_rel_side,
+        AVG("Extension") as avg_extension,
+        AVG("SpinRate") as avg_spin_rate,
+        AVG("SpinAxis") as avg_spin_axis,
+        AVG("VertApprAngle") as avg_vert_appr_angle,
+        AVG("HorzApprAngle") as avg_horz_appr_angle
+from trackman_pitcher
+group by ("Pitcher", "PitcherTeam", "PitcherThrows", "PitchType");
+    
