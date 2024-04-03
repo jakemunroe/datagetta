@@ -227,6 +227,6 @@ select "Pitcher", "PitcherTeam",
         AVG("VertApprAngle") as avg_vert_appr_angle,
         AVG("HorzApprAngle") as avg_horz_appr_angle
 from trackman_pitcher
-where "AutoPitchType" != ''
+where "AutoPitchType" != '' and "AutoPitchType" != 'Splitter'
 group by ("Pitcher", "PitcherTeam", "PitcherThrows", "PitchType");
     
