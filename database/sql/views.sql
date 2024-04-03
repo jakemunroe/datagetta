@@ -219,8 +219,8 @@ select "Pitcher", "PitcherTeam",
         AVG("RelSide") as avg_rel_side,
         AVG("Extension") as avg_extension,
         AVG("SpinRate") as avg_spin_rate,
-        AVG("SpinAxis") as avg_spin_axis
-        AVG("VertApprAngle") as avg_vert_appr_angle
+        AVG("SpinAxis") as avg_spin_axis,
+        AVG("VertApprAngle") as avg_vert_appr_angle,
         AVG("HorzApprAngle") as avg_horz_appr_angle
 from trackman_pitcher
 group by ("Pitcher", "PitcherTeam", "PitcherThrows");
