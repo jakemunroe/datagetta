@@ -222,7 +222,7 @@ select "Pitcher", "PitcherTeam",
         AVG("RelHeight") filter (where "RelHeight" is not null) as avg_rel_height,
         AVG("RelSide") filter (where "RelSide" is not null) as avg_rel_side,
         AVG("Extension") filter (where "Extension" is not null) as avg_extension,
-        AVG("SpinRate") filter (where "SpinRate" != NaN) as avg_spin_rate,
+        AVG("SpinRate") filter (where "SpinRate" != "NaN") as avg_spin_rate,
         AVG("SpinAxis") filter (where "SpinAxis" is not null) as avg_spin_axis,
         AVG("VertApprAngle") filter (where "VertApprAngle" is not null) as avg_vert_appr_angle,
         AVG("HorzApprAngle") filter (where "HorzApprAngle" is not null) as avg_horz_appr_angle
