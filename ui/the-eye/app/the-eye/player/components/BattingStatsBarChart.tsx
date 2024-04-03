@@ -13,6 +13,8 @@ function manipulateData (param : batter_stats_forTable[]) {
     result.push({ stat: 'OBP', value: param[0].on_base_percentage });
     result.push({ stat: 'SLUG', value: param[0].slugging_percentage });
     result.push({ stat: 'OPS', value: param[0].onbase_plus_slugging });
+    result.push({ stat: 'CHASE', value: param[0].chase_percentage });
+    result.push({ stat: 'IZW', value: param[0].in_zone_whiff_percentage });
     result.push({ stat: 'ISO', value: param[0].isolated_power });
     result.push({ stat: 'K%', value: param[0].k_percentage });
     result.push({ stat: 'BoB', value: param[0].base_on_ball_percentage });
@@ -26,7 +28,7 @@ export default function BattingStatsBarChart({player}: {player: batter_stats_for
             dataset = { manipulateData(player) }
             series = {[ { dataKey: 'value', color: '#e86100' } ]}
             yAxis = {[ { scaleType: 'band', dataKey: 'stat' } ]}
-            height = { 400 }
+            height = { 500 }
         />
     );
 }

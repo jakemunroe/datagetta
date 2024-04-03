@@ -9,6 +9,7 @@ export default function Page (
     { params: { teamName: string, playerName: string, startDate: string, endDate: string } })
 {
     const decodedTeamName = decodeURIComponent(params.teamName);
+    const decodedPlayerName = decodeURIComponent(params.playerName);
     
     return(
         <Box sx={{paddingY: 2}}>
@@ -20,7 +21,7 @@ export default function Page (
             <Box sx={{paddingTop: 2}}>
                 <Suspense fallback={<StatsTableSkeleton />}>
                     <CreateStatsDiagrams
-                        player = {params.playerName}
+                        player = {decodedPlayerName}
                         team = {decodedTeamName}
                         startDate = {params.startDate}
                         endDate = {params.endDate}

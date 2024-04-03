@@ -2,8 +2,8 @@
 
 import Link from '@/app/utils/Link'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Theme } from '@/app/utils/theme';
 import { pitcher_stats_forTable } from '../../../utils/types';
+import { Theme } from '@/app/utils/theme';
 import Box from '@mui/material/Box';
 
 const playerURL : string = '/the-eye/player/';
@@ -25,6 +25,36 @@ const columns: GridColDef[] = [
                 />
             )
         }
+    },
+    {
+        field: 'games',
+        headerName: 'G',
+        description: 'Games',
+        width: 80,
+    },
+    {
+        field: 'games_started',
+        headerName: 'GS',
+        description: 'Games Started',
+        width: 80,
+    },
+    {
+        field: 'pitches',
+        headerName: 'P',
+        description: 'Pitches',
+        width: 80,
+    },
+    {
+        field: 'total_innings_pitched',
+        headerName: 'IP',
+        description: 'Total Innings Pitched',
+        width: 80,
+    },
+    {
+        field: 'total_batters_faced',
+        headerName: 'BF',
+        description: 'Total Batters Faced',
+        width: 80,
     },
     {
         field: 'total_strikeouts_pitcher',
@@ -62,36 +92,6 @@ const columns: GridColDef[] = [
         description: 'Total Number of Chases',
         width: 80,
     },
-    {
-        field: 'pitches',
-        headerName: 'P',
-        description: 'Pitches',
-        width: 80,
-    },
-    {
-        field: 'games',
-        headerName: 'G',
-        description: 'Games',
-        width: 80,
-    },
-    {
-        field: 'games_started',
-        headerName: 'GS',
-        description: 'Games Started',
-        width: 80,
-    },
-    {
-        field: 'total_innings_pitched',
-        headerName: 'IP',
-        description: 'Total Innings Pitched',
-        width: 80,
-    },
-    {
-        field: 'total_batters_faced',
-        headerName: 'BF',
-        description: 'Total Batters Faced',
-        width: 80,
-    },
 ];
 
 export default function PitcherTable({players}: {players: pitcher_stats_forTable[]}) {
@@ -103,7 +103,7 @@ export default function PitcherTable({players}: {players: pitcher_stats_forTable
                 columns = {columns}
                 hideFooter = {true}
                 sx={{
-                    '& .MuiDataGrid-columnHeaders': {backgroundColor: Theme.palette.secondary.main},
+                    '& .MuiDataGrid-container--top [role=row]': {backgroundColor: Theme.palette.secondary.main},
                     '& .MuiDataGrid-columnHeaderTitle': {fontWeight: 700},
                 }}
             />
