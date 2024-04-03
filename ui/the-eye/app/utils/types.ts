@@ -14,6 +14,8 @@ export type batter_stats = {
     total_bases : bigint;
     on_base_percentage : number;
     slugging_percentage : number;
+    chase_percentage : number;
+    in_zone_whiff_percentage : number;
     games : bigint;
     batting_average : number;
     onbase_plus_slugging : number;
@@ -38,6 +40,8 @@ export type batter_stats_forTable = {
     total_bases : number;
     on_base_percentage : number;
     slugging_percentage : number;
+    chase_percentage : number;
+    in_zone_whiff_percentage : number;
     games : number;
     batting_average : number;
     onbase_plus_slugging : number;
@@ -76,4 +80,28 @@ export type pitcher_stats_forTable = {
     games_started : number;
     total_innings_pitched : number;
     total_batters_faced : number;
+}
+
+export type pitch_sums = {
+    Pitcher : string;
+    PitcherTeam : string;
+    total_pitches : bigint;
+    curveball_count : bigint;
+    fourseam_count : bigint;
+    sinker_count : bigint;
+    slider_count : bigint;
+    twoseam_count : bigint;
+    changeup_count : bigint;
+}
+
+export type pitch_sums_forTable = {
+    Pitcher : string;
+    PitcherTeam : string;
+    total_pitches : number;
+    curveball_count : number;
+    fourseam_count : number;
+    sinker_count : number;
+    slider_count : number;
+    twoseam_count : number;
+    changeup_count : number;
 }

@@ -2,8 +2,8 @@
 
 import Link from '@/app/utils/Link'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Theme } from '@/app/utils/theme';
 import { batter_stats_forTable } from '../../../utils/types';
+import { Theme } from '@/app/utils/theme';
 import Box from '@mui/material/Box';
 
 const playerURL : string = '/the-eye/player/';
@@ -123,6 +123,18 @@ const columns: GridColDef[] = [
         width: 80,
     },
     {
+        field: 'chase_percentage',
+        headerName: 'CHASE',
+        description: 'Chase Percentage',
+        width: 80,
+    },
+    {
+        field: 'in_zone_whiff_percentage',
+        headerName: 'IZW',
+        description: 'In Zone Whiff Percentage',
+        width: 80,
+    },
+    {
         field: 'isolated_power',
         headerName: 'ISO',
         description: 'Isolated Power',
@@ -151,7 +163,7 @@ export default function BatterTable({players}: {players: batter_stats_forTable[]
                 columns = {columns}
                 hideFooter = {true}
                 sx={{
-                    '& .MuiDataGrid-columnHeaders': {backgroundColor: Theme.palette.secondary.main},
+                    '& .MuiDataGrid-container--top [role=row]': {backgroundColor: Theme.palette.secondary.main},
                     '& .MuiDataGrid-columnHeaderTitle': {fontWeight: 700},
                 }}
             />

@@ -35,7 +35,7 @@ export default function RosterTable({players}: {players: {PlayerName: String, Te
             autoHeight = {true}
             hideFooter = {true}
             sx={{
-                '& .MuiDataGrid-columnHeaders': {backgroundColor: Theme.palette.secondary.main},
+                '& .MuiDataGrid-container--top [role=row]': {backgroundColor: Theme.palette.secondary.main},
                 '& .MuiDataGrid-columnHeaderTitle': {fontWeight: 700},
             }}
         />
