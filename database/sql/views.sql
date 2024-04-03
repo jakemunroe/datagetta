@@ -199,8 +199,8 @@ with pitcher_stats_subquery as (
                         ) as games_started,
         ((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
         SUM("OutsOnPlay"::integer))::decimal / 3) +
-        (((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
-        SUM("OutsOnPlay"::integer)) % 3)::decimal / 10) as total_innings_pitched,
+        (MOD((COUNT(*) filter (where "KorBB" = 'StrikeOut') + 
+        SUM("OutsOnPlay"::integer)), 3)::decimal / 10) as total_innings_pitched,
         COUNT(distinct ("PAofInning", "Inning", "Batter", "GameUID")) as total_batters_faced
     from trackman_metadata tm, trackman_pitcher tp, trackman_batter tb, seasons s
     where tm."PitchUID" = tp."PitchUID" and tm."PitchUID" = tb."PitchUID" and s."SeasonTitle" = '2024' and tm."UTCDate" >= s."StartDate" and tm."UTCDate" <= s."EndDate"
