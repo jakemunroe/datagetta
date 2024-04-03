@@ -2,7 +2,7 @@
 -- The function takes in the pitcher name, pitcher team, start date, and end date as arguments.
 drop function if exists get_pitch_count;
 create or replace function get_pitch_count(pitcher_name text, pitcher_team text, start_date date, end_date date)
-returns table("Pitcher" varchar, "PitcherTeam" varchar, "total_pitches" bigint, "curveball_count" bigint, "fourseam_count" bigint, "sinker_count" bigint, "slider_count" bigint, "twoseam_count" bigint, "changeup_count" bigint)
+returns table("Pitcher" varchar, "PitcherTeam" varchar, "total_pitches" bigint, "curveball_count" bigint, "fourseam_count" bigint, "sinker_count" bigint, "slider_count" bigint, "twoseam_count" bigint, "changeup_count" bigint, "cutter_count" bigint, "splitter_count" bigint, "other_count" bigint)
 as $$
 begin
     return query
@@ -13,7 +13,10 @@ begin
             COUNT(*) filter (where tp."AutoPitchType" = 'Sinker') as sinker_count,
             COUNT(*) filter (where tp."AutoPitchType" = 'Slider') as slider_count,
             COUNT(*) filter (where tp."TaggedPitchType" = 'Fastball' and tp."AutoPitchType" != 'Four-Seam') as twoseam_count,
-            COUNT(*) filter (where tp."AutoPitchType" = 'Changeup') as changeup_count
+            COUNT(*) filter (where tp."AutoPitchType" = 'Changeup') as changeup_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Cutter') as cutter_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Splitter') as splitter_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Other' or tp."AutoPitchType" = 'NaN') as other_count
 from trackman_metadata tm, trackman_pitcher tp
 where tp."Pitcher" = pitcher_name and tp."PitcherTeam" = pitcher_team and tp."PitchUID" = tm."PitchUID" and tm."UTCDate" >= start_date and tm."UTCDate" <= end_date
 group by (tp."Pitcher", tp."PitcherTeam");

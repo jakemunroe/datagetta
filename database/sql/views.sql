@@ -8,7 +8,10 @@ select "Pitcher" , "PitcherTeam",
             COUNT(*) filter (where tp."AutoPitchType" = 'Sinker') as sinker_count,
             COUNT(*) filter (where tp."AutoPitchType" = 'Slider') as slider_count,
             COUNT(*) filter (where tp."TaggedPitchType" = 'Fastball' and "AutoPitchType" != 'Four-Seam') as twoseam_count,
-            COUNT(*) filter (where tp."AutoPitchType" = 'Changeup') as changeup_count
+            COUNT(*) filter (where tp."AutoPitchType" = 'Changeup') as changeup_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Cutter') as cutter_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Splitter') as splitter_count,
+            COUNT(*) filter (where tp."AutoPitchType" = 'Other' or tp."AutoPitchType" = 'NaN') as other_count
 from trackman_pitcher tp, trackman_metadata tm, seasons s
 where tm."PitchUID" = tp."PitchUID" and s."SeasonTitle" = '2024' and tm."UTCDate" >= s."StartDate" and tm."UTCDate" <= s."EndDate"
 group by ("Pitcher", "PitcherTeam");
