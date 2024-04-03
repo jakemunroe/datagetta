@@ -1,3 +1,10 @@
+/*
+* Page that shows the team's roster.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import CreateRosterTable from '../../components/CreateRosterTable';
 import { Suspense } from 'react';
 import TableSkeleton from '../../components/TableSkeleton';

@@ -1,3 +1,11 @@
+/*
+* Layout used for team pages.
+* Queries and displays the team's name and conference.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import Box from "@mui/material/Box";
 import TeamInfo from '../components/TeamInfo';
 import TableTabs from "../components/TableTabs";

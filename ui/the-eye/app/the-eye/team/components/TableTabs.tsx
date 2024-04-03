@@ -1,3 +1,10 @@
+/*
+* Tabs to navigate to different team pages.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 'use client'
 
 import Box from "@mui/material/Box";

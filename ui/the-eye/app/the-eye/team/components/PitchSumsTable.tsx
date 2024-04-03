@@ -1,3 +1,11 @@
+/*
+* Table to show a player's pitch type sums.
+* Created based on MUI examples.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 'use client'
 
 import Link from '@/app/utils/Link'
@@ -67,6 +75,24 @@ const columns: GridColDef[] = [
         field: 'changeup_count',
         headerName: 'Changeup',
         description: 'Total Changeups',
+        width: 120,
+    },
+    {
+        field: 'cutter_count',
+        headerName: 'Cutter',
+        description: 'Total Cutters',
+        width: 120,
+    },
+    {
+        field: 'splitter_count',
+        headerName: 'Splitter',
+        description: 'Total Splitters',
+        width: 120,
+    },
+    {
+        field: 'other_count',
+        headerName: 'Other',
+        description: 'Total Others',
         width: 120,
     },
 ];

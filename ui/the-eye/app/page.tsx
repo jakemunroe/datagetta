@@ -1,3 +1,10 @@
+/*
+* Landing page for the app when visiting https://datagetta.app
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 'use client'
 
 import Box from '@mui/material/Box';
@@ -33,7 +40,6 @@ export default function LandingPage() {
                         color: '#e86100',
                         fontWeight: '700',
                         textWrap: 'nowrap',
-                        //textShadow: '#0b2341 0 0 8px',
                     }}
                 >
                     DATA GETTA

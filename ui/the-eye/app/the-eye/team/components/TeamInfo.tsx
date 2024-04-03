@@ -1,3 +1,10 @@
+/*
+* Displays the team name and conference.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import Box from "@mui/material/Box";
 import Typography from '@mui/material/Typography';
 

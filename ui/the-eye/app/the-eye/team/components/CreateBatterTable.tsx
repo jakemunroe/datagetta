@@ -1,3 +1,11 @@
+/*
+* Queries the batter_stats_view for the given team.
+* Passes this result to the Batter Table.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import { prisma } from '@/app/utils/db';
 import BatterTable from './BatterTable';
 import { batter_stats } from '@/app/utils/types';

@@ -1,3 +1,11 @@
+/*
+* Link component to be used as the main form of navigation in this app.
+* Combines the Next.js and MUI Link components together for a combined link with performance and styling.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import NextLink from 'next/link';
 import MUI_Link from '@mui/material/Link';
 

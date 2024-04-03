@@ -1,3 +1,11 @@
+/*
+* Tabs used in the side bars.
+* Created based on MUI examples.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";

@@ -1,3 +1,11 @@
+/*
+* Table to show a team's roster.
+* Created based on MUI examples.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 'use client'
 
 import Link from '@/app/utils/Link'

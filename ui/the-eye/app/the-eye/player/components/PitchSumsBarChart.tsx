@@ -18,6 +18,9 @@ function manipulateData (param : pitch_sums_forTable[]) {
     result.push({ stat: 'Sinker', value: param[0].sinker_count });
     result.push({ stat: 'Slider', value: param[0].slider_count });
     result.push({ stat: 'Changeup', value: param[0].changeup_count });
+    result.push({ stat: 'Cutter', value: param[0].cutter_count });
+    result.push({ stat: 'Splitter', value: param[0].splitter_count });
+    result.push({ stat: 'Other', value: param[0].other_count });
     return result;
 }
 

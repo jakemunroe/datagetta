@@ -1,3 +1,12 @@
+/*
+* Types relating to database views and functions.
+* Created manually because Prisma does not support views and functions,
+* so raw SQL is used to query views and functions.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 export type batter_stats = {
     Batter : string;
     BatterTeam : string;
@@ -62,7 +71,7 @@ export type pitcher_stats = {
     pitches : bigint;
     games : bigint;
     games_started : bigint;
-    total_innings_pitched : bigint;
+    total_innings_pitched : number;
     total_batters_faced : bigint;
 }
 
@@ -92,6 +101,9 @@ export type pitch_sums = {
     slider_count : bigint;
     twoseam_count : bigint;
     changeup_count : bigint;
+    cutter_count : bigint;
+    splitter_count : bigint;
+    other_count : bigint;
 }
 
 export type pitch_sums_forTable = {
@@ -104,4 +116,7 @@ export type pitch_sums_forTable = {
     slider_count : number;
     twoseam_count : number;
     changeup_count : number;
+    cutter_count : number;
+    splitter_count : number;
+    other_count : number;
 }

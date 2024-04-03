@@ -1,3 +1,11 @@
+/*
+* Combines the logo with the tabs.
+* Creates the logo as a link to return you to the home page.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import Tabs from './Tabs'
 import Box from "@mui/material/Box";
 import Image from 'next/image';

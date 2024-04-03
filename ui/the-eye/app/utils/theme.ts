@@ -1,4 +1,13 @@
+/*
+* Branding theme for the app.
+* Created based on Auburn's branding guide.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 'use client'
+
 import { Inter } from 'next/font/google'
 import createTheme from "@mui/material/styles/createTheme";
 

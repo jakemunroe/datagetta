@@ -1,3 +1,11 @@
+/*
+* Table to show a player's pitching stats.
+* Created based on MUI examples.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 'use client'
 
 import Link from '@/app/utils/Link'

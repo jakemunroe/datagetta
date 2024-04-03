@@ -1,3 +1,11 @@
+/*
+* Menu nav that is displayed on mobile only.
+* Created based on MUI examples.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import Drawer from '@mui/material/Drawer';
 import { Theme } from '@/app/utils/theme';
 import { common } from '@mui/material/colors';

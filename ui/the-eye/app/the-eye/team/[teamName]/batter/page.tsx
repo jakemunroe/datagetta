@@ -1,3 +1,10 @@
+/*
+* Page that shows the team's player batter stats.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import CreateBatterTable from '../../components/CreateBatterTable';
 import { Suspense } from 'react';
 import TableSkeleton from '../../components/TableSkeleton';

@@ -1,3 +1,10 @@
+/*
+* Initiates Prisma client to be used for the app.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import { PrismaClient } from '@prisma/client'
 
 // Creates a single connection to the database to fix the Next.js reload issue

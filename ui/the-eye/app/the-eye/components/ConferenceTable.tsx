@@ -1,3 +1,11 @@
+/*
+* Conference table that displays the conference name and list the teams in the conference.
+* The teams are listed as a Link that take you to its team page.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';

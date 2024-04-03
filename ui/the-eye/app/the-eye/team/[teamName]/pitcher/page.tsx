@@ -1,3 +1,10 @@
+/*
+* Page that shows the team's player pitcher stats.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import { Suspense } from 'react';
 import TableSkeleton from '../../components/TableSkeleton';
 import CreatePitcherTable from '../../components/CreatePitcherTable';

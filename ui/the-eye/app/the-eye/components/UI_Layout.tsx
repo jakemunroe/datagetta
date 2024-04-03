@@ -1,3 +1,11 @@
+/*
+* Combines all of the home page layout components together.
+* Adds functionality for the menu icon on mobile devices.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 'use client'
 
 import { useState } from 'react';

@@ -1,3 +1,14 @@
+/*
+* Bar that appears at the top of the screen.
+* Contains the menu icon button for mobile devices.
+* Created based on MUI examples.
+* 
+* Future home for a search bar.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';

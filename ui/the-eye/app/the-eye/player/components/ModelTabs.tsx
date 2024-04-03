@@ -21,7 +21,7 @@ export default function ModelTabs ({team, player}: {team: string, player: string
             setModel1Underline('hover');
             setModel2Underline('hover');
             setModel3Underline('hover');
-        } else if (pathName.includes('/model1')) {
+        } else if (pathName.includes('/shiftModel')) {
             setStatsUnderline('hover');
             setModel1Underline('always');
             setModel2Underline('hover');
@@ -59,8 +59,8 @@ export default function ModelTabs ({team, player}: {team: string, player: string
                 underline = {statsUnderline}
             />
             <Link 
-                href = {currentURL.concat(team + '/' + player).concat('/model1')}
-                name = 'Model 1'
+                href = {currentURL.concat(team + '/' + player).concat('/shiftModel')}
+                name = 'Shifting Model'
                 fontWeight = {600}
                 underline = {model1Underline}
             />

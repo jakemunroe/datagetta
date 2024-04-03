@@ -1,3 +1,11 @@
+/*
+* Queries the pitcher_stats_view and the pitch_sums_view for the given team.
+* Passes these result to their corresponding tables.
+* 
+* author: Braden Mosley
+* lastEdit: 04-03-2024
+*/
+
 import { prisma } from '@/app/utils/db';
 import { pitcher_replacer } from '@/app/utils/replacer';
 import { pitcher_stats, pitch_sums } from '@/app/utils/types';
