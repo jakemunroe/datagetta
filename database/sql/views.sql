@@ -206,3 +206,21 @@ with pitcher_stats_subquery as (
 select 
     *
 from pitcher_stats_subquery;
+
+-- View for defensive shifting modeling team
+drop view if exists pitcher_pitch_type_avg_view;
+create or replace view pitcher_pitch_type_avg_view as
+select "Pitcher", "PitcherTeam",
+        "PitcherThrows",
+        AVG("RelSpeed") as avg_relspeed,
+        AVG("InducedVertBreak") as avg_induced_vert_break,
+        AVG("HorzBreak") as avg_horz_break,
+        AVG("RelHeight") as avg_rel_height,
+        AVG("RelSide") as avg_rel_side,
+        AVG("Extension") as avg_extension,
+        AVG("SpinRate") as avg_spin_rate,
+        AVG("SpinAxis") as avg_spin_axis
+        AVG("VertApprAngle") as avg_vert_appr_angle
+        AVG("HorzApprAngle") as avg_horz_appr_angle
+from trackman_pitcher
+group by ("Pitcher", "PitcherTeam", "PitcherThrows");
