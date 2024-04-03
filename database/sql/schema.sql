@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS "defensive_shift_model_values" (
   "PitchType" varchar,
   "ModelValues" decimal [],
   PRIMARY KEY ("Pitcher", "PitcherTeam", "PitchType")
-)
+);
 
 ALTER TABLE "trackman_batter" ADD CONSTRAINT "trackman_batter_PitchUID_fkey1" FOREIGN KEY ("PitchUID") REFERENCES "trackman_metadata" ("PitchUID") ON DELETE CASCADE;
 
