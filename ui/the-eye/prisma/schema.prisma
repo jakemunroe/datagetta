@@ -14,13 +14,24 @@ model conferences {
   teams          teams[]
 }
 
+model defensive_shift_model_values {
+  Pitcher     String    @db.VarChar
+  PitcherTeam String    @db.VarChar
+  PitchType   String    @db.VarChar
+  ModelValues Decimal[] @db.Decimal
+  players     players   @relation(fields: [Pitcher, PitcherTeam], references: [PlayerName, TeamName], onDelete: Cascade, onUpdate: NoAction, map: "defensive_shift_model_values_Pitcher_PitcherTeam_fkey1")
+
+  @@id([Pitcher, PitcherTeam, PitchType])
+}
+
 model players {
-  PlayerName       String             @db.VarChar
-  TeamName         String             @db.VarChar
-  teams            teams              @relation(fields: [TeamName], references: [TeamName], onDelete: NoAction, onUpdate: NoAction)
-  trackman_batter  trackman_batter[]
-  trackman_catcher trackman_catcher[]
-  trackman_pitcher trackman_pitcher[]
+  PlayerName                   String                         @db.VarChar
+  TeamName                     String                         @db.VarChar
+  defensive_shift_model_values defensive_shift_model_values[]
+  teams                        teams                          @relation(fields: [TeamName], references: [TeamName], onDelete: Cascade, onUpdate: NoAction, map: "players_TeamName_fkey1")
+  trackman_batter              trackman_batter[]
+  trackman_catcher             trackman_catcher[]
+  trackman_pitcher             trackman_pitcher[]
 
   @@id([PlayerName, TeamName])
 }
@@ -31,12 +42,191 @@ model seasons {
   EndDate     DateTime? @db.Date
 }
 
+model staging_table {
+  teamname                       String?   @db.VarChar
+  displayname                    String?   @db.VarChar
+  conference                     String?   @db.VarChar
+  conferencename                 String?   @db.VarChar
+  pitchuid                       String    @id @db.Uuid
+  gamedate                       DateTime? @db.Date
+  pitchtime                      DateTime? @db.Time(6)
+  inning                         Int?
+  topbottom                      String?   @db.VarChar
+  outs                           Int?
+  balls                          Int?
+  strikes                        Int?
+  pitchcall                      String?   @db.VarChar
+  korbb                          String?   @db.VarChar
+  taggedhittype                  String?   @db.VarChar
+  playresult                     String?   @db.VarChar
+  outsonplay                     String?   @db.VarChar
+  runsscored                     String?   @db.VarChar
+  runnersat                      String?   @db.VarChar
+  hometeam                       String?   @db.VarChar
+  awayteam                       String?   @db.VarChar
+  stadium                        String?   @db.VarChar
+  level                          String?   @db.VarChar
+  league                         String?   @db.VarChar
+  gameid                         String?   @db.VarChar
+  gameuid                        String?   @db.VarChar
+  utcdate                        DateTime? @db.Date
+  utctime                        DateTime? @db.Time(6)
+  localdatetime                  DateTime? @db.Date
+  utcdatetime                    DateTime? @db.Date
+  autohittype                    String?   @db.VarChar
+  system                         String?   @db.VarChar
+  hometeamforeignid              String?   @db.VarChar
+  awayteamforeignid              String?   @db.VarChar
+  gameforeignid                  String?   @db.VarChar
+  playid                         String?   @db.VarChar
+  pitchno                        Int?
+  paofinning                     Int?
+  pitchofpa                      Int?
+  pitcher                        String?   @db.VarChar
+  pitcherid                      Int?
+  pitcherthrows                  String?   @db.VarChar
+  pitcherteam                    String?   @db.VarChar
+  pitcherset                     String?   @db.VarChar
+  taggedpitchtype                String?   @db.VarChar
+  autopitchtype                  String?   @db.VarChar
+  relspeed                       Decimal?  @db.Decimal
+  vertrelangle                   Decimal?  @db.Decimal
+  horzrelangle                   Decimal?  @db.Decimal
+  spinrate                       Decimal?  @db.Decimal
+  spinaxis                       Decimal?  @db.Decimal
+  tilt                           String?   @db.VarChar
+  relheight                      Decimal?  @db.Decimal
+  relside                        Decimal?  @db.Decimal
+  extension                      Decimal?  @db.Decimal
+  vertbreak                      Decimal?  @db.Decimal
+  inducedvert                    Decimal?  @db.Decimal
+  horzbreak                      Decimal?  @db.Decimal
+  platelocheight                 Decimal?  @db.Decimal
+  platelocside                   Decimal?  @db.Decimal
+  zonespeed                      Decimal?  @db.Decimal
+  vertapprangle                  Decimal?  @db.Decimal
+  horzapprangle                  Decimal?  @db.Decimal
+  zonetime                       Decimal?  @db.Decimal
+  pfxx                           Decimal?  @db.Decimal
+  pfxz                           Decimal?  @db.Decimal
+  x0                             Decimal?  @db.Decimal
+  y0                             Decimal?  @db.Decimal
+  z0                             Decimal?  @db.Decimal
+  vx0                            Decimal?  @db.Decimal
+  vy0                            Decimal?  @db.Decimal
+  vz0                            Decimal?  @db.Decimal
+  ax0                            Decimal?  @db.Decimal
+  ay0                            Decimal?  @db.Decimal
+  az0                            Decimal?  @db.Decimal
+  speeddrop                      Decimal?  @db.Decimal
+  pitchlastmeasuredx             Decimal?  @db.Decimal
+  pitchlastmeasuredy             Decimal?  @db.Decimal
+  pitchlastmeasuredz             Decimal?  @db.Decimal
+  pitchtrajectoryxc0             Decimal?  @db.Decimal
+  pitchtrajectoryxc1             Decimal?  @db.Decimal
+  pitchtrajectoryxc2             Decimal?  @db.Decimal
+  pitchtrajectoryyc0             Decimal?  @db.Decimal
+  pitchtrajectoryyc1             Decimal?  @db.Decimal
+  pitchtrajectoryyc2             Decimal?  @db.Decimal
+  pitchtrajectoryzc0             Decimal?  @db.Decimal
+  pitchtrajectoryzc1             Decimal?  @db.Decimal
+  pitchtrajectoryzc2             Decimal?  @db.Decimal
+  pitchreleaseconfidence         String?   @db.VarChar
+  pitchlocationconfidence        String?   @db.VarChar
+  pitchmovementconfidence        String?   @db.VarChar
+  catcher                        String?   @db.VarChar
+  catcherid                      Int?
+  catcherthrows                  String?   @db.VarChar
+  catcherteam                    String?   @db.VarChar
+  throwspeed                     Decimal?  @db.Decimal
+  poptime                        Decimal?  @db.Decimal
+  exchangetime                   Decimal?  @db.Decimal
+  timetobase                     Decimal?  @db.Decimal
+  catchpositionx                 Decimal?  @db.Decimal
+  catchpositiony                 Decimal?  @db.Decimal
+  catchpositionz                 Decimal?  @db.Decimal
+  throwpositionx                 Decimal?  @db.Decimal
+  throwpositiony                 Decimal?  @db.Decimal
+  throwpositionz                 Decimal?  @db.Decimal
+  basepositionx                  Decimal?  @db.Decimal
+  basepositiony                  Decimal?  @db.Decimal
+  basepositionz                  Decimal?  @db.Decimal
+  throwtrajectoryxc0             Decimal?  @db.Decimal
+  throwtrajectoryxc1             Decimal?  @db.Decimal
+  throwtrajectoryxc2             Decimal?  @db.Decimal
+  throwtrajectoryyc0             Decimal?  @db.Decimal
+  throwtrajectoryyc1             Decimal?  @db.Decimal
+  throwtrajectoryyc2             Decimal?  @db.Decimal
+  throwtrajectoryzc0             Decimal?  @db.Decimal
+  throwtrajectoryzc1             Decimal?  @db.Decimal
+  throwtrajectoryzc2             Decimal?  @db.Decimal
+  catcherthrowcatchconfidence    String?   @db.VarChar
+  catcherthrowreleaseconfidence  String?   @db.VarChar
+  catcherthrowlocationconfidence String?   @db.VarChar
+  batter                         String?   @db.VarChar
+  batterid                       Int?
+  batterside                     String?   @db.VarChar
+  batterteam                     String?   @db.VarChar
+  exitspeed                      Decimal?  @db.Decimal
+  angle                          Decimal?  @db.Decimal
+  direction                      Decimal?  @db.Decimal
+  hitspinrate                    Decimal?  @db.Decimal
+  positionat110x                 Decimal?  @db.Decimal
+  positionat110y                 Decimal?  @db.Decimal
+  positionat110z                 Decimal?  @db.Decimal
+  distance                       Decimal?  @db.Decimal
+  lasttracked                    Decimal?  @db.Decimal
+  bearing                        Decimal?  @db.Decimal
+  hangtime                       Decimal?  @db.Decimal
+  effectivevelo                  Decimal?  @db.Decimal
+  maxheight                      Decimal?  @db.Decimal
+  measuredduration               Decimal?  @db.Decimal
+  contactpositionx               Decimal?  @db.Decimal
+  contactpositiony               Decimal?  @db.Decimal
+  contactpositionz               Decimal?  @db.Decimal
+  hitspinaxis                    Decimal?  @db.Decimal
+  hittrajectoryxc0               Decimal?  @db.Decimal
+  hittrajectoryxc1               Decimal?  @db.Decimal
+  hittrajectoryxc2               Decimal?  @db.Decimal
+  hittrajectoryxc3               Decimal?  @db.Decimal
+  hittrajectoryxc4               Decimal?  @db.Decimal
+  hittrajectoryxc5               Decimal?  @db.Decimal
+  hittrajectoryxc6               Decimal?  @db.Decimal
+  hittrajectoryxc7               Decimal?  @db.Decimal
+  hittrajectoryxc8               Decimal?  @db.Decimal
+  hittrajectoryyc0               Decimal?  @db.Decimal
+  hittrajectoryyc1               Decimal?  @db.Decimal
+  hittrajectoryyc2               Decimal?  @db.Decimal
+  hittrajectoryyc3               Decimal?  @db.Decimal
+  hittrajectoryyc4               Decimal?  @db.Decimal
+  hittrajectoryyc5               Decimal?  @db.Decimal
+  hittrajectoryyc6               Decimal?  @db.Decimal
+  hittrajectoryyc7               Decimal?  @db.Decimal
+  hittrajectoryyc8               Decimal?  @db.Decimal
+  hittrajectoryzc0               Decimal?  @db.Decimal
+  hittrajectoryzc1               Decimal?  @db.Decimal
+  hittrajectoryzc2               Decimal?  @db.Decimal
+  hittrajectoryzc3               Decimal?  @db.Decimal
+  hittrajectoryzc4               Decimal?  @db.Decimal
+  hittrajectoryzc5               Decimal?  @db.Decimal
+  hittrajectoryzc6               Decimal?  @db.Decimal
+  hittrajectoryzc7               Decimal?  @db.Decimal
+  hittrajectoryzc8               Decimal?  @db.Decimal
+  hitlaunchconfidence            String?   @db.VarChar
+  hitlandingconfidence           String?   @db.VarChar
+  seasontitle                    String?   @db.VarChar
+  startdate                      DateTime? @db.Date
+  enddate                        DateTime? @db.Date
+}
+
 model teams {
-  TeamName    String       @id @db.VarChar
-  DisplayName String?      @db.VarChar
-  Conference  String?      @db.VarChar
-  players     players[]
-  conferences conferences? @relation(fields: [Conference], references: [ConferenceName], onDelete: NoAction, onUpdate: NoAction)
+  TeamName                                            String              @id @db.VarChar
+  DisplayName                                         String?             @db.VarChar
+  Conference                                          String?             @db.VarChar
+  players                                             players[]
+  conferences                                         conferences?        @relation(fields: [Conference], references: [ConferenceName], onDelete: Cascade, onUpdate: NoAction, map: "teams_Conference_fkey1")
+  trackman_metadata_trackman_metadata_AwayTeamToteams trackman_metadata[] @relation("trackman_metadata_AwayTeamToteams")
+  trackman_metadata_trackman_metadata_HomeTeamToteams trackman_metadata[] @relation("trackman_metadata_HomeTeamToteams")
 }
 
 model trackman_batter {
@@ -92,8 +282,8 @@ model trackman_batter {
   HitTrajectoryZc8     Decimal?          @db.Decimal
   HitLaunchConfidence  String?           @db.VarChar
   HitLandingConfidence String?           @db.VarChar
-  players              players?          @relation(fields: [Batter, BatterTeam], references: [PlayerName, TeamName], onDelete: NoAction, onUpdate: NoAction)
-  trackman_metadata    trackman_metadata @relation(fields: [PitchUID], references: [PitchUID], onDelete: NoAction, onUpdate: NoAction)
+  players              players?          @relation(fields: [Batter, BatterTeam], references: [PlayerName, TeamName], onDelete: Cascade, onUpdate: NoAction, map: "trackman_batter_Batter_BatterTeam_fkey1")
+  trackman_metadata    trackman_metadata @relation(fields: [PitchUID], references: [PitchUID], onDelete: Cascade, onUpdate: NoAction, map: "trackman_batter_PitchUID_fkey1")
 }
 
 model trackman_catcher {
@@ -127,46 +317,48 @@ model trackman_catcher {
   CatcherThrowCatchConfidence    String?           @db.VarChar
   CatcherThrowReleaseConfidence  String?           @db.VarChar
   CatcherThrowLocationConfidence String?           @db.VarChar
-  players                        players?          @relation(fields: [Catcher, CatcherTeam], references: [PlayerName, TeamName], onDelete: NoAction, onUpdate: NoAction)
-  trackman_metadata              trackman_metadata @relation(fields: [PitchUID], references: [PitchUID], onDelete: NoAction, onUpdate: NoAction)
+  players                        players?          @relation(fields: [Catcher, CatcherTeam], references: [PlayerName, TeamName], onDelete: Cascade, onUpdate: NoAction, map: "trackman_catcher_Catcher_CatcherTeam_fkey1")
+  trackman_metadata              trackman_metadata @relation(fields: [PitchUID], references: [PitchUID], onDelete: Cascade, onUpdate: NoAction, map: "trackman_catcher_PitchUID_fkey1")
 }
 
 model trackman_metadata {
-  PitchUID          String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  GameDate          DateTime?         @db.Date
-  PitchTime         DateTime?         @db.Time(6)
-  Inning            Int?
-  TopBottom         String?           @db.VarChar
-  Outs              Int?
-  Balls             Int?
-  Strikes           Int?
-  PitchCall         String?           @db.VarChar
-  KorBB             String?           @db.VarChar
-  TaggedHitType     String?           @db.VarChar
-  PlayResult        String?           @db.VarChar
-  OutsOnPlay        String?           @db.VarChar
-  RunsScored        String?           @db.VarChar
-  RunnersAt         String?           @db.VarChar
-  HomeTeam          String?           @db.VarChar
-  AwayTeam          String?           @db.VarChar
-  Stadium           String?           @db.VarChar
-  Level             String?           @db.VarChar
-  League            String?           @db.VarChar
-  GameID            String?           @db.VarChar
-  GameUID           String?           @db.VarChar
-  UTCDate           DateTime?         @db.Date
-  UTCtime           DateTime?         @db.Time(6)
-  LocalDateTime     DateTime?         @db.Date
-  UTCDateTime       DateTime?         @db.Date
-  AutoHitType       String?           @db.VarChar
-  System            String?           @db.VarChar
-  HomeTeamForeignID String?
-  AwayTeamForeignID String?
-  GameForeignID     String?
-  PlayID            String?           @db.VarChar
-  trackman_batter   trackman_batter?
-  trackman_catcher  trackman_catcher?
-  trackman_pitcher  trackman_pitcher?
+  PitchUID                                String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  GameDate                                DateTime?         @db.Date
+  PitchTime                               DateTime?         @db.Time(6)
+  Inning                                  Int?
+  TopBottom                               String?           @db.VarChar
+  Outs                                    Int?
+  Balls                                   Int?
+  Strikes                                 Int?
+  PitchCall                               String?           @db.VarChar
+  KorBB                                   String?           @db.VarChar
+  TaggedHitType                           String?           @db.VarChar
+  PlayResult                              String?           @db.VarChar
+  OutsOnPlay                              String?           @db.VarChar
+  RunsScored                              String?           @db.VarChar
+  RunnersAt                               String?           @db.VarChar
+  HomeTeam                                String?           @db.VarChar
+  AwayTeam                                String?           @db.VarChar
+  Stadium                                 String?           @db.VarChar
+  Level                                   String?           @db.VarChar
+  League                                  String?           @db.VarChar
+  GameID                                  String?           @db.VarChar
+  GameUID                                 String?           @db.VarChar
+  UTCDate                                 DateTime?         @db.Date
+  UTCtime                                 DateTime?         @db.Time(6)
+  LocalDateTime                           DateTime?         @db.Date
+  UTCDateTime                             DateTime?         @db.Date
+  AutoHitType                             String?           @db.VarChar
+  System                                  String?           @db.VarChar
+  HomeTeamForeignID                       String?           @db.VarChar
+  AwayTeamForeignID                       String?           @db.VarChar
+  GameForeignID                           String?           @db.VarChar
+  PlayID                                  String?           @db.VarChar
+  trackman_batter                         trackman_batter?
+  trackman_catcher                        trackman_catcher?
+  teams_trackman_metadata_AwayTeamToteams teams?            @relation("trackman_metadata_AwayTeamToteams", fields: [AwayTeam], references: [TeamName], onDelete: Cascade, onUpdate: NoAction, map: "trackman_metadata_AwayTeam_fkey1")
+  teams_trackman_metadata_HomeTeamToteams teams?            @relation("trackman_metadata_HomeTeamToteams", fields: [HomeTeam], references: [TeamName], onDelete: Cascade, onUpdate: NoAction, map: "trackman_metadata_HomeTeam_fkey1")
+  trackman_pitcher                        trackman_pitcher?
 }
 
 model trackman_pitcher {
@@ -226,12 +418,41 @@ model trackman_pitcher {
   PitchReleaseConfidence  String?           @db.VarChar
   PitchLocationConfidence String?           @db.VarChar
   PitchMovementConfidence String?           @db.VarChar
-  trackman_metadata       trackman_metadata @relation(fields: [PitchUID], references: [PitchUID], onDelete: NoAction, onUpdate: NoAction)
-  players                 players?          @relation(fields: [Pitcher, PitcherTeam], references: [PlayerName, TeamName], onDelete: NoAction, onUpdate: NoAction)
+  trackman_metadata       trackman_metadata @relation(fields: [PitchUID], references: [PitchUID], onDelete: Cascade, onUpdate: NoAction, map: "trackman_pitcher_PitchUID_fkey1")
+  players                 players?          @relation(fields: [Pitcher, PitcherTeam], references: [PlayerName, TeamName], onDelete: Cascade, onUpdate: NoAction, map: "trackman_pitcher_Pitcher_PitcherTeam_fkey1")
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-view pitch_sums_view {
+view batter_stats_view_2024 {
+  Batter                   String?  @db.VarChar
+  BatterTeam               String?  @db.VarChar
+  hits                     BigInt?
+  at_bats                  BigInt?
+  strikes                  BigInt?
+  walks                    BigInt?
+  strikeouts               BigInt?
+  homeruns                 BigInt?
+  extra_base_hits          BigInt?
+  plate_appearances        BigInt?
+  hit_by_pitch             BigInt?
+  sacrifice                BigInt?
+  total_bases              BigInt?
+  on_base_percentage       Decimal? @db.Decimal
+  slugging_percentage      Decimal? @db.Decimal
+  chase_percentage         Decimal? @db.Decimal
+  in_zone_whiff_percentage Decimal? @db.Decimal
+  games                    BigInt?
+  batting_average          Decimal? @db.Decimal
+  onbase_plus_slugging     Decimal? @db.Decimal
+  isolated_power           Decimal? @db.Decimal
+  k_percentage             Decimal? @db.Decimal
+  base_on_ball_percentage  Decimal? @db.Decimal
+
+  @@ignore
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view pitch_sums_view_2024 {
   Pitcher         String? @db.VarChar
   PitcherTeam     String? @db.VarChar
   total_pitches   BigInt?
@@ -241,41 +462,17 @@ view pitch_sums_view {
   slider_count    BigInt?
   twoseam_count   BigInt?
   changeup_count  BigInt?
+  cutter_count    BigInt?
+  splitter_count  BigInt?
+  other_count     BigInt?
 
   @@ignore
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-view player_stats_view {
-  Batter                  String?  @db.VarChar
-  BatterTeam              String?  @db.VarChar
-  hits                    BigInt?
-  at_bats                 BigInt?
-  strikes                 BigInt?
-  walks                   BigInt?
-  strikeouts              BigInt?
-  homeruns                BigInt?
-  extra_base_hits         BigInt?
-  plate_appearances       BigInt?
-  hit_by_pitch            BigInt?
-  sacrifice               BigInt?
-  total_bases             BigInt?
-  on_base_percentage      Decimal? @db.Decimal
-  slugging_percentage     Decimal? @db.Decimal
-  games                   BigInt?
-  batting_average         Decimal? @db.Decimal
-  onbase_plus_slugging    Decimal? @db.Decimal
-  isolated_power          Decimal? @db.Decimal
-  k_percentage            Decimal? @db.Decimal
-  base_on_ball_percentage Decimal? @db.Decimal
-
-  @@ignore
-}
-
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-view pitcher_stats_view {
-  Pitcher                   String? @db.VarChar
-  PitcherTeam               String? @db.VarChar
+view pitcher_stats_view_2024 {
+  Pitcher                   String?  @db.VarChar
+  PitcherTeam               String?  @db.VarChar
   total_strikeouts_pitcher  BigInt?
   total_walks_pitcher       BigInt?
   total_out_of_zone_pitches BigInt?
@@ -284,6 +481,29 @@ view pitcher_stats_view {
   total_num_chases          BigInt?
   pitches                   BigInt?
   games                     BigInt?
+  games_started             BigInt?
+  total_innings_pitched     Decimal? @db.Decimal
+  total_batters_faced       BigInt?
+
+  @@ignore
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view pitcher_pitch_type_avg_view {
+  Pitcher             String?  @db.VarChar
+  PitcherTeam         String?  @db.VarChar
+  PitcherThrows       String?  @db.VarChar
+  PitchType           String?  @db.VarChar
+  avg_rel_speed       Decimal? @db.Decimal
+  avg_induced_vert    Decimal? @db.Decimal
+  avg_horz_break      Decimal? @db.Decimal
+  avg_rel_height      Decimal? @db.Decimal
+  avg_rel_side        Decimal? @db.Decimal
+  avg_extension       Decimal? @db.Decimal
+  avg_spin_rate       Decimal? @db.Decimal
+  avg_spin_axis       Decimal? @db.Decimal
+  avg_vert_appr_angle Decimal? @db.Decimal
+  avg_horz_appr_angle Decimal? @db.Decimal
 
   @@ignore
 }

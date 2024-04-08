@@ -36,15 +36,19 @@ services:
       - datagetta_net
     ports:
       - "5432:5432"
-  #  caddy:
-  #   image: caddy:latest
-  #   container_name: caddy
-  #   restart: unless-stopped
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ./Caddyfile:/etc/caddy/Caddyfile
+  defensive_shift:
+    image: python:3.10-slim
+    container_name: defensive_shift
+    networks:
+      - datagetta_net
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        apt update
+        apt install -y git gcc pkg-config libcairo2-dev
+        git clone https://github.com/tmgavron/shifting_model.git
+        cd shifting_model && pip install -r requirements.txt
+        tail -f /dev/null
 
 networks:
   datagetta_net:
