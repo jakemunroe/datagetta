@@ -18,10 +18,11 @@ model defensive_shift_model_values {
   Pitcher     String    @db.VarChar
   PitcherTeam String    @db.VarChar
   PitchType   String    @db.VarChar
+  BatterSide  String    @db.VarChar
   ModelValues Decimal[] @db.Decimal
   players     players   @relation(fields: [Pitcher, PitcherTeam], references: [PlayerName, TeamName], onDelete: Cascade, onUpdate: NoAction, map: "defensive_shift_model_values_Pitcher_PitcherTeam_fkey1")
 
-  @@id([Pitcher, PitcherTeam, PitchType])
+  @@id([Pitcher, PitcherTeam, PitchType, BatterSide])
 }
 
 model players {
