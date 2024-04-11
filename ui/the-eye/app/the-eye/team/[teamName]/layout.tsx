@@ -26,7 +26,7 @@ export default async function Layout({ children, params }: { children: React.Rea
             <Box
                 sx={{
                     backgroundColor: '#f5f5f5',
-                    paddingLeft: 8,
+                    paddingLeft: {xs: 4, sm: 8},
                     paddingY: 2,
                     marginTop: '4px',
                 }}
@@ -34,7 +34,7 @@ export default async function Layout({ children, params }: { children: React.Rea
                 <TableTabs team = {decodedTeamName}/>
             </Box>
 
-            <Box sx={{paddingX: 8, paddingY: 4}}>
+            <Box sx={{paddingX: {xs: 4, sm: 8}, paddingY: 4}}>
                 <TeamInfo 
                     name = {team?.DisplayName as string}
                     conference = {team?.Conference as string}
