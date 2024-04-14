@@ -424,6 +424,24 @@ model trackman_pitcher {
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view pitch_sums_view_2024 {
+  Pitcher         String? @db.VarChar
+  PitcherTeam     String? @db.VarChar
+  total_pitches   BigInt?
+  curveball_count BigInt?
+  fourseam_count  BigInt?
+  sinker_count    BigInt?
+  slider_count    BigInt?
+  twoseam_count   BigInt?
+  changeup_count  BigInt?
+  cutter_count    BigInt?
+  splitter_count  BigInt?
+  other_count     BigInt?
+
+  @@ignore
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 view batter_stats_view_2024 {
   Batter                   String?  @db.VarChar
   BatterTeam               String?  @db.VarChar
@@ -448,24 +466,6 @@ view batter_stats_view_2024 {
   isolated_power           Decimal? @db.Decimal
   k_percentage             Decimal? @db.Decimal
   base_on_ball_percentage  Decimal? @db.Decimal
-
-  @@ignore
-}
-
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-view pitch_sums_view_2024 {
-  Pitcher         String? @db.VarChar
-  PitcherTeam     String? @db.VarChar
-  total_pitches   BigInt?
-  curveball_count BigInt?
-  fourseam_count  BigInt?
-  sinker_count    BigInt?
-  slider_count    BigInt?
-  twoseam_count   BigInt?
-  changeup_count  BigInt?
-  cutter_count    BigInt?
-  splitter_count  BigInt?
-  other_count     BigInt?
 
   @@ignore
 }
