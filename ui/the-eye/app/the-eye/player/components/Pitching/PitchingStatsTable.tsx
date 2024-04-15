@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-export default function PitchingStatsTable({player}: {player: pitcher_stats_forTable[]}) {
+export default function PitchingStatsTable({player}: {player: pitcher_stats_forTable[]}) {    
     return (
         <Paper 
             elevation={3}

@@ -9,11 +9,11 @@
 'use client'
 
 import { Inter } from 'next/font/google'
-import createTheme from "@mui/material/styles/createTheme";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const Theme = createTheme({
+export const Theme = responsiveFontSizes(createTheme({
 
     palette: {
         primary: {
@@ -40,4 +40,4 @@ export const Theme = createTheme({
         fontFamily: inter.style.fontFamily,
     },
 
-});
+}));

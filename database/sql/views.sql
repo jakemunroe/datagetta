@@ -220,17 +220,18 @@ select "Pitcher", "PitcherTeam",
             when "AutoPitchType" = 'Four-Seam' then 'Fastball'
             else "AutoPitchType"
         end as "PitchType",
-        AVG("RelSpeed") filter (where "RelSpeed" != 'NaN') as avg_rel_speed,
-        AVG("InducedVert") filter (where "InducedVert" != 'NaN') as avg_induced_vert,
-        AVG("HorzBreak") filter (where "HorzBreak" != 'NaN') as avg_horz_break,
-        AVG("RelHeight") filter (where "RelHeight" != 'NaN') as avg_rel_height,
-        AVG("RelSide") filter (where "RelSide" != 'NaN') as avg_rel_side,
-        AVG("Extension") filter (where "Extension" != 'NaN') as avg_extension,
-        AVG("SpinRate") filter (where "SpinRate" != 'NaN') as avg_spin_rate,
-        AVG("SpinAxis") filter (where "SpinAxis" != 'NaN') as avg_spin_axis,
-        AVG("VertApprAngle") filter (where "VertApprAngle" != 'NaN') as avg_vert_appr_angle,
-        AVG("HorzApprAngle") filter (where "HorzApprAngle" != 'NaN') as avg_horz_appr_angle
+        AVG("RelSpeed") as avg_rel_speed,
+        AVG("InducedVert") as avg_induced_vert,
+        AVG("HorzBreak") as avg_horz_break,
+        AVG("RelHeight") as avg_rel_height,
+        AVG("RelSide")  as avg_rel_side,
+        AVG("Extension") as avg_extension,
+        AVG("SpinRate") as avg_spin_rate,
+        AVG("SpinAxis") as avg_spin_axis,
+        AVG("VertApprAngle") as avg_vert_appr_angle,
+        AVG("HorzApprAngle") as avg_horz_appr_angle
 from trackman_pitcher
-where "AutoPitchType" != ''
+where "AutoPitchType" != '' and "AutoPitchType" != 'NaN' and "RelSpeed" != 'NaN' and "InducedVert" != 'NaN' and "HorzBreak" != 'NaN' and "RelHeight" != 'NaN' and "RelSide" != 'NaN' and "Extension" != 'NaN'
+and "SpinRate" != 'NaN' and "SpinAxis" != 'NaN' and "VertApprAngle" != 'NaN' and "HorzApprAngle" != 'NaN'
 group by ("Pitcher", "PitcherTeam", "PitcherThrows", "PitchType");
     

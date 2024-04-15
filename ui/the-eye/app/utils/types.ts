@@ -4,7 +4,7 @@
 * so raw SQL is used to query views and functions.
 * 
 * author: Braden Mosley
-* lastEdit: 04-03-2024
+* lastEdit: 04-07-2024
 */
 
 export type batter_stats = {
@@ -119,4 +119,12 @@ export type pitch_sums_forTable = {
     cutter_count : number;
     splitter_count : number;
     other_count : number;
+}
+
+export type defensive_shift_model_values = {
+    Pitcher : string;
+    PitcherTeam : string;
+    PitcherThrows : string;
+    PitchType : string;
+    ModelValues : number[];
 }

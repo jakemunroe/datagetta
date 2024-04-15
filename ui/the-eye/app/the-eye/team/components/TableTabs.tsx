@@ -2,7 +2,7 @@
 * Tabs to navigate to different team pages.
 * 
 * author: Braden Mosley
-* lastEdit: 04-03-2024
+* lastEdit: 04-10-2024
 */
 
 'use client'
@@ -22,22 +22,16 @@ export default function TableTabs ({team}: {team: string}) {
     const [pitcherUnderline, setPitcherUnderline] = useState<'none' | 'hover' | 'always' | undefined>('hover');
     
     useEffect(() => {
+        setRosterUnderline('hover');
+        setBatterUnderline('hover');
+        setPitcherUnderline('hover');
+        
         if (pathName.includes('/roster')) {
             setRosterUnderline('always');
-            setBatterUnderline('hover');
-            setPitcherUnderline('hover');
         } else if (pathName.includes('/batter')) {
-            setRosterUnderline('hover');
             setBatterUnderline('always');
-            setPitcherUnderline('hover');
         } else if (pathName.includes('/pitcher')) {
-            setRosterUnderline('hover');
-            setBatterUnderline('hover');
             setPitcherUnderline('always');
-        } else {
-            setRosterUnderline('hover');
-            setBatterUnderline('hover');
-            setPitcherUnderline('hover');
         }
     }, [pathName])
     
